@@ -15,7 +15,8 @@ UPLOAD_FOLDER = "files"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 current_file = None
-current_tempo = 20/100
+current_tempo = 20
+current_Orignal_tempo = 1
 current_pitch = 0
 
 
@@ -51,7 +52,7 @@ def upload():
 
 @app.route("/process", methods=["POST"])
 def process_audio():
-    global current_file, current_tempo, current_pitch
+    global current_file, current_tempo, current_pitch, current_Orignal_tempo
     try:
 
         if current_file is None:
@@ -59,7 +60,8 @@ def process_audio():
 
         data = request.json
        
-        current_tempo = float(data["tempo"]) / 100.0
+        current_tempo = float(data["tempo"]) 
+        current_Orignal_tempo = float(data["tempoOrignal"]) 
         current_pitch = int(data["pitch"])
 
         return jsonify({"message": "Audio processed successfully"})
@@ -70,7 +72,7 @@ def process_audio():
 #Downlode
 @app.route("/download", methods=["GET"])
 def download():
-    global current_file, current_tempo, current_pitch
+    global current_file, current_tempo, current_pitch, current_Orignal_tempo
 
     try:
         if current_file is None or not os.path.exists(current_file):
@@ -79,8 +81,13 @@ def download():
         # 🎧 Process same as play
         y, sr = librosa.load(current_file, sr=None)
 
+        if current_Orignal_tempo is None or current_Orignal_tempo == 0:
+            return jsonify({"error": "Original BPM not set"}), 400
+        
+        tempo_factor = current_tempo / current_Orignal_tempo
+
         y = librosa.effects.pitch_shift(y, sr=sr, n_steps=current_pitch)
-        y = librosa.effects.time_stretch(y, rate=current_tempo)
+        y = librosa.effects.time_stretch(y, rate=tempo_factor)
         
 
         output_path = os.path.join(UPLOAD_FOLDER, "processed.wav")
@@ -99,7 +106,7 @@ def download():
 
 @app.route("/play", methods=["GET"])
 def play_audio():
-    global current_file, current_tempo, current_pitch
+    global current_file, current_tempo, current_pitch, current_Orignal_tempo
 
     try:
         if current_file is None or not os.path.exists(current_file):
@@ -108,8 +115,13 @@ def play_audio():
 
         y, sr = librosa.load(current_file, sr=None)
 
+        if current_Orignal_tempo is None or current_Orignal_tempo == 0:
+            return jsonify({"error": "Original BPM not set"}), 400
+        
+        tempo_factor = current_tempo / current_Orignal_tempo
+
         y = librosa.effects.pitch_shift(y, sr=sr, n_steps=current_pitch)
-        y = librosa.effects.time_stretch(y, rate=current_tempo)
+        y = librosa.effects.time_stretch(y, rate=tempo_factor)
         
 
         output_path = os.path.join(UPLOAD_FOLDER, "processed.wav")

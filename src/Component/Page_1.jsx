@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Edit from "./Edit";
 import Button from "./Button";
 
-const Page_1 = ({ fileRef, file, message, setMessage, BClick, FileChange, EXDownload, tempo ,setTempo, pitch, setPitch }) => {
+const Page_1 = ({ fileRef, file, message, setMessage, BClick, FileChange, EXDownload, tempo ,setTempo, pitch, setPitch, tempoOrignal, setTempoOrignal  }) => {
 
 
   const EXProcess = async () => {
@@ -13,6 +13,7 @@ const Page_1 = ({ fileRef, file, message, setMessage, BClick, FileChange, EXDown
       },
       body: JSON.stringify({
         tempo: tempo,
+        tempoOrignal:tempoOrignal,
         pitch: pitch,
       }),
     });
@@ -43,6 +44,8 @@ const Page_1 = ({ fileRef, file, message, setMessage, BClick, FileChange, EXDown
               setTempo={setTempo}
               pitch={pitch}
               setPitch={setPitch}
+              tempoOrignal={tempoOrignal}
+              settempoOrignal={setTempoOrignal}
             />
           </div>
           <div className=" p-5 my-5 rounded-3xl bg-black/50 text-black">
