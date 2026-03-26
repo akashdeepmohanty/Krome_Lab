@@ -44,15 +44,3 @@ To run the project locally, follow these steps:
 ```bash
     npm run dev
 ```
----
-
-### Webpage look
-
-![Page](src/assets/Screenshot%202026-03-19%20024955.png)
-
-
-![Page](src/assets/Screenshot%202026-03-19%20024859.png)
-
-![Page](src/assets/Screenshot%202026-03-19%20024915.png)
-
-
