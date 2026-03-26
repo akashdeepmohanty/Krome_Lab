@@ -7,11 +7,11 @@
 
 
 
-### Introduction 
+Krome Lab is a web-based audio editing application designed to perform real-time audio transformations such as tempo adjustment and pitch shifting.
 
+The backend is built using Flask and handles audio file upload, processing, and output delivery. Audio processing is implemented using digital signal processing techniques with the Librosa library, enabling continuous tempo scaling and semitone-based pitch shifting.
 
-
----
+The system provides REST API endpoints for handling file operations and parameter-based audio manipulation. This project was developed as a collaborative full-stack application, with primary focus on backend logic and audio processing design.
 
 ### Tech Stack
 
@@ -22,7 +22,12 @@
 - **Vite** – A fast build tool and development server that improves the development workflow and enables rapid frontend development.
 
 
----
+## Features
+- Upload audio files for processing
+- Real-time tempo adjustment (continuous scaling)
+- Semitone-based pitch shifting
+- Download or stream processed audio
+- Backend powered by Flask APIs
 
 ### Prerequisites
 - Node.js (Javascript Library)
